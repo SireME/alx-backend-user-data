@@ -32,3 +32,11 @@ def not_authorized() -> None:
     trigger unauthorized endpoint
     """
     abort(401)
+
+
+@app_views.route('/forbidden/', strict_slashes=False)
+def its_forbidden() -> None:
+    """ GET /api/v1/forbidden
+    trigger forbidden endpoint
+    """
+    abort(403)
