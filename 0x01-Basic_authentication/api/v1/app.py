@@ -44,24 +44,45 @@ def forbidden(error) -> str:
 
 @app.before_request
 def filter_request():
+    """
+    A filter function to check authentication and
+    authorization before processing each request.
+
+    This function checks if authentication is required for
+      the requested path and ensures the user is
+        authenticated and authorized.
+
+    If authentication is not required or the user
+      is authenticated and authorized, the request proceeds.
+    Otherwise, appropriate HTTP error
+    responses (401 or 403) are returned.
+
+    :return: None
+    """
 
     if auth is None:
         return
 
     excluded_paths = [
-            '/api/v1/status/',
-            '/api/v1/unauthorized/',
-            '/api/v1/forbidden/'
-            ]
+        '/api/v1/status/',
+        '/api/v1/unauthorized/',
+        '/api/v1/forbidden/'
+    ]
+
     path = request.path
+
+    # Check if authentication is required for the requested path
     if not auth.require_auth(path, excluded_paths):
         return
 
+    # Check if the request contains authorization headers
     if auth.authorization_header(request) is None:
-        print(request.headers)
-        abort(401)
+        print(request.headers)  # Optionally log the request headers
+        abort(401)  # Unauthorized
+
+    # Check if the user associated with the request is valid
     if auth.current_user(request) is None:
-        abort(403)
+        abort(403)  # Forbidden
 
 
 if __name__ == "__main__":
