@@ -7,10 +7,11 @@ class BasicAuth(Auth):
     """
     This module implements basic authentication
     """
-    def extract_base64_authorization_header(self, authorization_header: str) -> str:
+    def extract_base64_authorization_header(self, a: str) -> str:
         """
         method to return authorization header
         """
+        authorization_header = a
         if authorization_header is None:
             return None
 
