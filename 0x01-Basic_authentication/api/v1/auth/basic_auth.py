@@ -51,7 +51,13 @@ class BasicAuth(Auth):
             return non_r
         if ':' not in d:
             return non_r
-        email_and_password = d.split(':')
+        if d.count(':') > 1:
+            em_pwd = d.split(':')
+            email = em_pwd[0]
+            pwd = ':'.join(em_pwd[1:])
+            email_and_password = [email, pwd]
+        else:
+            email_and_password = d.split(':')
         return tuple(email_and_password)
 
     def user_object_from_credentials(self, em: str, pwd: str):
