@@ -82,3 +82,25 @@ class BasicAuth(Auth):
             return None  # if bassword is not that of user
 
         return user[0]
+
+    def current_user(self, request=None) -> TypeVar('User'):
+        """extract current user from request Authorization
+        header and validate with the database
+        """
+        # get the authorization header: "Authorization"
+        # from request format:Basic jvhbhvjhk
+        a_h: str = self.authorization_header(request)
+
+        # extract authorization header format: jvhbhvjhk
+        ext = self.extract_base64_authorization_header(a_h)
+
+        # decode authorization header format username:pwd
+        decode = self.decode_base64_authorization_header(ext)
+
+        # have email and pwd as tuple format: (email, pwd)
+        ep = self.extract_user_credentials(decode)
+
+        # get userobject from email and password
+        user = self.user_object_from_credentials(ep[0], ep[1])
+
+        return user
