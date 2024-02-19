@@ -88,7 +88,7 @@ def filter_request():
         abort(403)  # Forbidden
 
     # add current user to request
-    current_user =  auth.current_user(request)
+    current_user = auth.current_user(request)
     request.current_user = current_user
 
 
