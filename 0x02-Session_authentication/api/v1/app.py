@@ -87,6 +87,10 @@ def filter_request():
     if auth.current_user(request) is None:
         abort(403)  # Forbidden
 
+    # add current user to request
+    current_user =  auth.current_user(request)
+    request.current_user = current_user
+
 
 if __name__ == "__main__":
     host = getenv("API_HOST", "0.0.0.0")
