@@ -71,17 +71,16 @@ class BasicAuth(Auth):
             return None
 
         # Search for the user in db based on email
-        user = User.search({'email': user_email})
+        try:
+            users = User.search({'email': user_email})
+        except Exception:
+            return None
 
-        # If no user found with email, return None
-        if not user:
-            return None  # if database does not contain user
-
-        # check user password validity
-        if not user[0].is_valid_password(user_pwd):
-            return None  # if bassword is not that of user
-
-        return user[0]
+        for user in users:
+            if user.is_valid_password(user_pwd):
+                return user
+        # no user found with password
+        return None
 
     def current_user(self, request=None) -> TypeVar('User'):
         """extract current user from request Authorization
