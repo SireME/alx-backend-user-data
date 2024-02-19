@@ -18,9 +18,8 @@ class Auth:
         # Check if any excluded path matches the given path
         for excluded_path in excluded_paths:
             ep = excluded_path  # shorten name for pep8
-            path_end = path.split('/')[-1]
-            if ep[-1] == '*' and ep.split('/')[-1][:-1] in path_end:
-                path = excluded_path
+            if ep.endswith('*') and path.startswith(ep.rstrip('*')):
+                return False
 
             if path.rstrip('/') == excluded_path.rstrip('/'):
                 return False
