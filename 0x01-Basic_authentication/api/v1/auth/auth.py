@@ -20,7 +20,7 @@ class Auth:
             ep = excluded_path  # shorten name for pep8
             path_end = path.split('/')[-1]
             if ep[-1] == '*' and ep.split('/')[-1][:-1] in path_end:
-                excluded_path = path
+                path = excluded_path
 
             if path.rstrip('/') == excluded_path.rstrip('/'):
                 return False
