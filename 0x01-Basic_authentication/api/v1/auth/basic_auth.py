@@ -74,7 +74,7 @@ class BasicAuth(Auth):
         user = User.search({'email': user_email})
 
         # If no user found with email, return None
-        if len(user) == 0:
+        if not user:
             return None  # if database does not contain user
 
         # check user password validity
