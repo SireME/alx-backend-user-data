@@ -2,6 +2,8 @@
 """Module for user authentication"""
 from api.v1.auth.auth import Auth
 import base64
+from typing import TypeVar
+from models.user import User
 
 
 class BasicAuth(Auth):
@@ -51,3 +53,32 @@ class BasicAuth(Auth):
             return non_r
         email_and_password = d.split(':')
         return tuple(email_and_password)
+
+    def user_object_from_credentials(self, em: str, pwd: str):
+        """
+        return user instance based on email and pwd
+        Args:
+            pwd: user password
+            em: user password
+        return:
+            None or User object : TypeVar('User')
+        """
+        user_email, user_pwd = em, pwd
+        if em is None or not isinstance(em, str):
+            return None
+
+        if pwd is None or not isinstance(pwd, str):
+            return None
+
+        # Search for the user in db based on email
+        user = User.search({'email': user_email})
+
+        # If no user found with email, return None
+        if len(user) == 0:
+            return None  # if database does not contain user
+
+        # check user password validity
+        if not user[0].is_valid_password(user_pwd):
+            return None  # if bassword is not that of user
+
+        return user[0]
