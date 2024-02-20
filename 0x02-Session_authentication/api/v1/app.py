@@ -72,7 +72,8 @@ def filter_request():
     excluded_paths = [
         '/api/v1/status/',
         '/api/v1/unauthorized/',
-        '/api/v1/forbidden/'
+        '/api/v1/forbidden/',
+        '/api/v1/auth_session/login/'
     ]
 
     path = request.path
@@ -90,6 +91,11 @@ def filter_request():
     if auth.current_user(request) is None:
         abort(403)  # Forbidden
 
+    # situation of no headers and no cookies
+    s_c =  auth.session_cookie(request)
+    if auth.authorization_header(request) is None and s_c is None:
+        abort(401)
+    
     # add current user to request
     current_user = auth.current_user(request)
     request.current_user = current_user
