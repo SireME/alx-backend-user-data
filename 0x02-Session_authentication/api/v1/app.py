@@ -82,20 +82,20 @@ def filter_request():
     if not auth.require_auth(path, excluded_paths):
         return
 
-    # Check if the request contains authorization headers
-    if auth.authorization_header(request) is None:
-        print(request.headers)  # Optionally log the request headers
-        abort(401)  # Unauthorized
+    # # Check if the request contains authorization headers
+    # if auth.authorization_header(request) is None:
+    #     print(request.headers)  # Optionally log the request headers
+    #     abort(401)  # Unauthorized
 
     # Check if the user associated with the request is valid
     if auth.current_user(request) is None:
         abort(403)  # Forbidden
 
     # situation of no headers and no cookies
-    s_c =  auth.session_cookie(request)
+    s_c = auth.session_cookie(request)
     if auth.authorization_header(request) is None and s_c is None:
         abort(401)
-    
+
     # add current user to request
     current_user = auth.current_user(request)
     request.current_user = current_user
