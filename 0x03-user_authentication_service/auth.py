@@ -80,3 +80,15 @@ class Auth:
         except Exception:
             pass
         return None
+
+    def destroy_session(self, user_id) -> None:
+        """
+        method to destroy a session id/reset it to None
+        """
+        try:
+            user = self._db.find_user_by(id=user_id)
+            if user:
+                setattr(user, 'session_id', None)
+        except Exception:
+            pass
+        return None
