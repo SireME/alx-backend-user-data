@@ -1,4 +1,5 @@
-"""DB module
+"""DB module: this module contains a database class
+with associated methods to carry out bd operations
 """
 from sqlalchemy import create_engine
 from sqlalchemy.ext.declarative import declarative_base
@@ -10,7 +11,8 @@ from typing import TypeVar
 
 
 class DB:
-    """DB class
+    """DB class with methods to conduct
+    basic db operations
     """
 
     def __init__(self) -> None:
@@ -30,11 +32,11 @@ class DB:
             self.__session = DBSession()
         return self.__session
 
-    def add_user(self, email: str, hashed_pwd: str) -> User:
+    def add_user(self, email: str, hashed_password: str) -> User:
         """
         add new user to database
         """
-        user = User(email=email, hashed_password=hashed_pwd)
+        user = User(email=email, hashed_password=hashed_password)
         self._session.add(user)
         self._session.commit()
         return user
