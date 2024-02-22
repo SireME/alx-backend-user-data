@@ -2,6 +2,7 @@
 """
 This module handles user suthentication
 """
+import uuid
 from user import User
 from db import DB
 from sqlalchemy.orm.exc import NoResultFound
@@ -13,6 +14,13 @@ def _hash_password(password: str) -> bytes:
     used from the User class
     """
     return User.set_password(User, password)
+
+
+def _generate_uuid() -> str:
+    """
+    This method generates a random uuid
+    """
+    return str(uuid.uuid4())
 
 
 class Auth:
