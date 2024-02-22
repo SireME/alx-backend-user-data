@@ -46,3 +46,4 @@ class Auth:
                 return user.check_password(password)
         except Exception:
             return False
+        return False
