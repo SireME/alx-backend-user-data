@@ -36,5 +36,5 @@ class User(Base):
         Method to check password
         """
         encd = password.encode('utf-8')
-        hs_pwd = self.hashed_password.encode('utf-8')
+        hs_pwd = self.hashed_password
         return bcrypt.checkpw(encd, hs_pwd)

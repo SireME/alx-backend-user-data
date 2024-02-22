@@ -35,3 +35,14 @@ class Auth:
             hp = _hash_password(password)
             obj = self._db.add_user(email=email, hashed_password=hp)
             return obj
+
+    def valid_login(self, email: str, password: str) -> bool:
+        """
+        method to check if login is valid
+        """
+        try:
+            user = self._db.find_user_by(email=email)
+            if user:
+                return user.check_password(password)
+        except Exception:
+            return False
