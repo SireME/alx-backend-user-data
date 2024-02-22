@@ -41,3 +41,17 @@ class DB:
         self._session.add(user)
         self._session.commit()
         return user
+
+    def find_user_by(self, **kwargs):
+        """
+        return first row of user based on keyword arguments
+        """
+        from sqlalchemy.exc import InvalidRequestError
+        from sqlalchemy.orm.exc import NoResultFound
+
+        try:
+            return self._session.query(User).filter_by(**kwargs).one()
+        except NoResultFound:
+            raise NoResultFound
+        except InvalidRequestError:
+            raise InvalidRequestError
