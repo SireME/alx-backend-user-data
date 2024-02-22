@@ -13,8 +13,7 @@ my_db = DB()
 
 email = 'test@test.com'
 hashed_password = "hashedPwd__"
-emaili  = "ss"
-user = my_db.add_user(emaili, hashed_password)
+user = my_db.add_user(email, hashed_password)
 print(user.id)
 
 try:
