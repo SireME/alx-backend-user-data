@@ -2,14 +2,12 @@
 """
 This module handles user suthentication
 """
-import bcrypt
+from user import User
 
 
 def _hash_password(password: str) -> bytes:
     """
     Method to hash password
+    used from the User class
     """
-    gen = bcrypt.gensalt()
-    encd = password.encode('utf-8')
-    hpwd = bcrypt.hashpw(encd, gen)
-    return hpwd
+    return User.set_password(User, password)

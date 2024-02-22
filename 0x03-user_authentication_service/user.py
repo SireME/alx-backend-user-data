@@ -28,7 +28,8 @@ class User(Base):
         gen = bcrypt.gensalt()
         encd = password.encode('utf-8')
         hpwd = self.hashed_password
-        hpwd = bcrypt.hashpw(encd, gen).decode('utf-8')
+        hpwd = bcrypt.hashpw(encd, gen)
+        return hpwd
 
     def check_password(self, password: str):
         """
