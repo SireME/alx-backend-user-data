@@ -1,3 +1,4 @@
+#!/usr/bin/env python3
 """DB module: this module contains a database class
 with associated methods to carry out bd operations
 """
