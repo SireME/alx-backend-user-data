@@ -49,10 +49,14 @@ class DB:
         from sqlalchemy.exc import InvalidRequestError
         from sqlalchemy.orm.exc import NoResultFound
 
-        try:
-            user = self._session.query(User).filter_by(**kwargs).first()
-            if user is None:
-                raise NoResultFound
-            return user
-        except InvalidRequestError:
-            raise
+        u_keys = ['id', 'email',
+                  'hashed_password',
+                  'session_id', 'reset_token']
+        for key in kwargs.keys():
+            if key not in u_keys:
+                raise InvalidRequestError
+
+        result = self._session.query(User).filter_by(**kwargs).first()
+        if result is None:
+            raise NoResultFound
+        return result
