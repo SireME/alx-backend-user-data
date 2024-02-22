@@ -16,7 +16,10 @@ def welcome() -> str:
 
 
 @app.route('/users', methods=['POST'])
-def users():
+def users() -> str:
+    """
+    register user in database from form data
+    """
     email = request.form.get('email')
     password = request.form.get('password')
     try:
