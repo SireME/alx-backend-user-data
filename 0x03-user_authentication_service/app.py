@@ -51,7 +51,10 @@ def login() -> str:
 
 
 @app.route('/sessions', methods=['DELETE'])
-def logout() -> None:
+def logout() -> str:
+    """
+    method yo logout user and send appropriate response
+    """
     session_id = request.cookies.get('session_id')
     # if user with session id exists, delete session
     user = AUTH.get_user_from_session_id(session_id)
