@@ -109,12 +109,14 @@ class Auth:
 
         def update_password(reset_token: str, password: str) -> None:
             """
-            update password using reset token
+            hash and update password using reset token
             """
             try:
                 rt = reset_token
                 user = self._db.find_user_by(reset_token=rt)
+
                 hashed_password = _hash_password(password)
-                setattr(user, 'hashed_password', hashed_password)
+
+                self._db.update_user(user.id, hashed_password=hashed_password)
             except NoResultFound:
                 raise ValueError
