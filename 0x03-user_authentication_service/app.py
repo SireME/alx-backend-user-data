@@ -66,5 +66,21 @@ def logout() -> str:
     return redirect('/')
 
 
+@app.route('/profile', methods=['GET'])
+def profile() -> str:
+    """
+    This endpoint responds with users profile
+    """
+    session_id = request.cookies.get('session_id')
+    if session_id is None:
+        abort(403)
+    # if user with session id exists, retrieve mail
+    user = AUTH.get_user_from_session_id(session_id)
+    if user is None:
+        abort(403)
+    msg = {"email": user.email}
+    return jsonify(msg)
+
+
 if __name__ == "__main__":
     app.run(host="0.0.0.0", port="5000")
