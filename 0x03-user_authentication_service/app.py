@@ -13,6 +13,9 @@ app = Flask(__name__)
 
 @app.route('/')
 def welcome() -> str:
+    """
+    entry point into application
+    """
     return jsonify({"message": "Bienvenue"})
 
 
